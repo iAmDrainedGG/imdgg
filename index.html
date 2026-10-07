@@ -1207,6 +1207,250 @@ footer{
 
 }
 
+
+
+/* =========================
+   ÚLTIMO VIDEO / NOVEDADES
+========================= */
+
+.latest-video-section{
+  padding:20px 0 95px;
+}
+
+.latest-video-header{
+  margin-bottom:25px;
+}
+
+.latest-video-label{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  color:#ff4d6d;
+
+  font-size:.75rem;
+  font-weight:1000;
+
+  letter-spacing:2px;
+  text-transform:uppercase;
+
+  margin-bottom:8px;
+}
+
+.latest-video-label::before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#ff315f;
+  box-shadow:
+    0 0 8px #ff315f,
+    0 0 18px rgba(255,49,95,.65);
+}
+
+.latest-video-title{
+  margin:0;
+  font-size:clamp(2rem,4vw,3.4rem);
+  letter-spacing:-1.5px;
+}
+
+.latest-video-subtitle{
+  margin:10px 0 0;
+  color:#aa9ab8;
+  line-height:1.7;
+}
+
+.latest-video-box{
+  position:relative;
+  display:block;
+
+  width:100%;
+  max-width:1000px;
+
+  margin-top:26px;
+
+  overflow:hidden;
+
+  border-radius:28px;
+
+  border:1px solid rgba(255,255,255,.12);
+
+  background:rgba(255,255,255,.04);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.40),
+    0 0 45px rgba(255,45,100,.10);
+
+  text-decoration:none;
+  color:white;
+
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    border-color .35s ease;
+}
+
+.latest-video-box:hover{
+  transform:translateY(-8px) scale(1.01);
+  border-color:rgba(255,80,150,.27);
+
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.45),
+    0 0 55px rgba(255,45,100,.18);
+}
+
+.latest-video-image{
+  width:100%;
+  display:block;
+
+  transition:
+    transform .5s ease,
+    filter .4s ease;
+}
+
+.latest-video-box:hover .latest-video-image{
+  transform:scale(1.035);
+
+  filter:
+    brightness(.88)
+    saturate(1.08);
+}
+
+.latest-video-box::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(5,2,10,.68),
+      rgba(5,2,10,.08) 50%,
+      transparent 72%
+    );
+}
+
+.latest-badge{
+  position:absolute;
+
+  top:20px;
+  left:20px;
+
+  z-index:4;
+
+  padding:8px 12px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff174f,
+      #ff006e
+    );
+
+  color:white;
+
+  font-size:.72rem;
+  font-weight:1000;
+  letter-spacing:1px;
+
+  box-shadow:
+    0 0 20px rgba(255,0,80,.35);
+}
+
+.youtube-video-logo{
+  position:absolute;
+
+  left:24px;
+  bottom:24px;
+
+  z-index:4;
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  padding:11px 15px;
+
+  border-radius:15px;
+
+  background:rgba(5,5,10,.82);
+
+  border:1px solid rgba(255,255,255,.15);
+
+  backdrop-filter:blur(12px);
+
+  color:white;
+
+  font-weight:900;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.35);
+}
+
+.youtube-icon{
+  width:42px;
+  height:30px;
+
+  position:relative;
+
+  border-radius:9px;
+
+  background:#ff0033;
+
+  box-shadow:
+    0 0 18px rgba(255,0,50,.40);
+}
+
+.youtube-icon::after{
+  content:"";
+
+  position:absolute;
+
+  top:50%;
+  left:52%;
+
+  transform:translate(-50%,-50%);
+
+  width:0;
+  height:0;
+
+  border-top:7px solid transparent;
+  border-bottom:7px solid transparent;
+  border-left:12px solid white;
+}
+
+@media(max-width:620px){
+
+  .latest-video-section{
+    padding-bottom:65px;
+  }
+
+  .youtube-video-logo{
+    left:14px;
+    bottom:14px;
+
+    padding:9px 11px;
+
+    font-size:.82rem;
+  }
+
+  .youtube-icon{
+    width:34px;
+    height:24px;
+  }
+
+  .latest-badge{
+    top:12px;
+    left:12px;
+  }
+
+}
+
 </style>
 </head>
 
@@ -1589,6 +1833,62 @@ footer{
 
 </section>
 
+
+
+
+
+<!-- =========================
+     ÚLTIMO VIDEO / NOVEDADES
+========================= -->
+
+<section class="latest-video-section">
+
+  <div class="latest-video-header">
+
+    <div class="latest-video-label">
+      NOVEDADES
+    </div>
+
+    <h2 class="latest-video-title">
+      Último video publicado.
+    </h2>
+
+    <p class="latest-video-subtitle">
+      Lo más reciente que subí al canal.
+    </p>
+
+  </div>
+
+  <a
+    class="latest-video-box"
+    href="https://www.youtube.com/@iAmDrainedGG"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+
+    <img
+      class="latest-video-image"
+      src="ultimo-video.png"
+      alt="Último video publicado por iAmDrainedGG"
+    >
+
+    <div class="latest-badge">
+      NUEVO VIDEO
+    </div>
+
+    <div class="youtube-video-logo">
+
+      <span class="youtube-icon"></span>
+
+      <span>
+        Ver en YouTube
+      </span>
+
+    </div>
+
+  </a>
+
+</section>
 
 
 <!-- =========================

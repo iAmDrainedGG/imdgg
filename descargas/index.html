@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101025">
+  <title>IMDGG Downloads</title>
+
+  <style>
+    :root{
+      --bg:#070713;
+      --bg2:#0f0f26;
+      --text:#ffffff;
+      --muted:#b8b8d3;
+
+      --purple:#8e4cff;
+      --pink:#ff4fc8;
+      --cyan:#28e7ff;
+      --green:#83ff69;
+      --yellow:#ffe86b;
+      --orange:#ff965c;
+      --red:#ff4f68;
+
+      --card:rgba(255,255,255,.065);
+      --line:rgba(255,255,255,.13);
+      --shadow:0 24px 70px rgba(0,0,0,.35);
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 8% 8%, rgba(142,76,255,.22), transparent 26%),
+        radial-gradient(circle at 90% 12%, rgba(40,231,255,.14), transparent 24%),
+        radial-gradient(circle at 78% 75%, rgba(255,79,200,.13), transparent 25%),
+        radial-gradient(circle at 20% 82%, rgba(131,255,105,.10), transparent 22%),
+        linear-gradient(145deg, #060610, #101025 48%, #090916);
+      overflow-x:hidden;
+    }
+
+    /* ===== FONDO DECORATIVO ===== */
+
+    .background-grid{
+      position:fixed;
+      inset:0;
+      z-index:-6;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+      background-size:42px 42px;
+      mask-image:linear-gradient(to bottom, black 0%, rgba(0,0,0,.6) 65%, transparent 100%);
+    }
+
+    .aurora{
+      position:fixed;
+      inset:-40%;
+      z-index:-7;
+      pointer-events:none;
+      background:
+        conic-gradient(
+          from 20deg,
+          rgba(142,76,255,.14),
+          rgba(40,231,255,.10),
+          rgba(131,255,105,.08),
+          rgba(255,232,107,.07),
+          rgba(255,79,200,.12),
+          rgba(142,76,255,.14)
+        );
+      filter:blur(80px);
+      animation:auroraSpin 28s linear infinite;
+    }
+
+    @keyframes auroraSpin{
+      to{ transform:rotate(360deg); }
+    }
+
+    .scanlines{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      pointer-events:none;
+      opacity:.035;
+      background:repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.4) 0,
+        rgba(255,255,255,.4) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+    }
+
+    .pixel{
+      position:fixed;
+      width:10px;
+      height:10px;
+      border-radius:2px;
+      opacity:.45;
+      z-index:-1;
+      pointer-events:none;
+      animation:floatPixel linear infinite;
+      box-shadow:0 0 12px currentColor;
+    }
+
+    @keyframes floatPixel{
+      from{
+        transform:translateY(110vh) rotate(0deg);
+      }
+      to{
+        transform:translateY(-20vh) rotate(360deg);
+      }
+    }
+
+    /* ===== GENERAL ===== */
+
+    .container{
+      width:min(1180px,92%);
+      margin:auto;
+      position:relative;
+      z-index:1;
+    }
+
+    header{
+      padding:22px 0 0;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:13px 15px 13px 18px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:rgba(8,8,23,.76);
+      backdrop-filter:blur(18px);
+      box-shadow:0 16px 45px rgba(0,0,0,.22);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      font-weight:1000;
+      letter-spacing:.8px;
+    }
+
+    .brand-cube{
+      width:16px;
+      height:16px;
+      transform:rotate(45deg);
+      border-radius:3px;
+      background:linear-gradient(135deg,var(--pink),var(--purple),var(--cyan));
+      box-shadow:
+        0 0 12px var(--purple),
+        0 0 22px rgba(40,231,255,.35);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav-link{
+      color:#e8e7f2;
+      text-decoration:none;
+      padding:10px 13px;
+      border-radius:12px;
+      font-size:.9rem;
+      font-weight:800;
+      transition:.2s ease;
+    }
+
+    .nav-link:hover{
+      background:rgba(255,255,255,.07);
+      transform:translateY(-2px);
+    }
+
+    /* ===== HERO ===== */
+
+    .hero{
+      position:relative;
+      padding:82px 0 60px;
+      text-align:center;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:520px;
+      height:220px;
+      left:50%;
+      top:60px;
+      transform:translateX(-50%);
+      background:radial-gradient(ellipse, rgba(142,76,255,.22), transparent 68%);
+      filter:blur(30px);
+      z-index:-1;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 13px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.11);
+      background:rgba(255,255,255,.05);
+      color:#e5c7ff;
+      font-size:.78rem;
+      font-weight:1000;
+      letter-spacing:1.7px;
+      text-transform:uppercase;
+    }
+
+    .hero h1{
+      margin:20px 0 14px;
+      font-size:clamp(3.4rem,9vw,7.4rem);
+      line-height:.88;
+      letter-spacing:-5px;
+    }
+
+    .hero-gradient{
+      background:linear-gradient(
+        90deg,
+        var(--purple),
+        var(--pink),
+        var(--orange),
+        var(--yellow),
+        var(--green),
+        var(--cyan),
+        var(--purple)
+      );
+      background-size:300%;
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      animation:gradientMove 8s linear infinite;
+      filter:drop-shadow(0 0 20px rgba(142,76,255,.18));
+    }
+
+    @keyframes gradientMove{
+      to{ background-position:300% center; }
+    }
+
+    .hero p{
+      max-width:760px;
+      margin:0 auto;
+      color:var(--muted);
+      font-size:1.08rem;
+      line-height:1.8;
+    }
+
+    .hero-tags{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:27px;
+    }
+
+    .tag{
+      padding:9px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(255,255,255,.04);
+      color:#d8d8e8;
+      font-size:.82rem;
+      font-weight:800;
+    }
+
+    /* ===== SECCIONES ===== */
+
+    .category{
+      padding:35px 0 55px;
+    }
+
+    .category-heading{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:22px;
+    }
+
+    .category-kicker{
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:.72rem;
+      font-weight:1000;
+      margin-bottom:7px;
+    }
+
+    .category h2{
+      margin:0;
+      font-size:clamp(2rem,4vw,3.2rem);
+      letter-spacing:-1.5px;
+    }
+
+    .category-description{
+      color:var(--muted);
+      max-width:560px;
+      line-height:1.65;
+      margin:0;
+      text-align:right;
+    }
+
+    .kicker-purple{ color:#cf8cff; }
+    .kicker-green{ color:#a8ff8f; }
+
+    /* ===== DECORACIÓN DE DIVISOR ===== */
+
+    .section-divider{
+      height:1px;
+      position:relative;
+      margin:15px 0;
+      background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(142,76,255,.5),
+        rgba(255,79,200,.45),
+        rgba(40,231,255,.45),
+        transparent
+      );
+    }
+
+    .section-divider::before,
+    .section-divider::after{
+      content:"";
+      position:absolute;
+      top:50%;
+      width:9px;
+      height:9px;
+      transform:translateY(-50%) rotate(45deg);
+      border-radius:2px;
+    }
+
+    .section-divider::before{
+      left:22%;
+      background:var(--pink);
+      box-shadow:0 0 14px var(--pink);
+    }
+
+    .section-divider::after{
+      right:22%;
+      background:var(--cyan);
+      box-shadow:0 0 14px var(--cyan);
+    }
+
+    /* ===== TARJETA DE DESCARGA ===== */
+
+    .download-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:24px;
+    }
+
+    .download-card{
+      position:relative;
+      overflow:hidden;
+      min-height:100%;
+      padding:15px;
+      border-radius:30px;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.09),
+          rgba(255,255,255,.025)
+        );
+      backdrop-filter:blur(18px);
+      box-shadow:var(--shadow);
+      transition:
+        transform .35s cubic-bezier(.2,.8,.2,1),
+        border-color .3s ease,
+        box-shadow .35s ease;
+    }
+
+    .download-card::before{
+      content:"";
+      position:absolute;
+      width:230px;
+      height:230px;
+      border-radius:50%;
+      right:-100px;
+      bottom:-110px;
+      filter:blur(55px);
+      opacity:.16;
+      transition:.4s;
+    }
+
+    .download-card.modpack::before{
+      background:var(--purple);
+    }
+
+    .download-card.texture::before{
+      background:var(--green);
+    }
+
+    .download-card:hover{
+      transform:translateY(-10px) scale(1.012);
+      border-color:rgba(255,255,255,.22);
+      box-shadow:
+        0 36px 90px rgba(0,0,0,.45),
+        0 0 45px rgba(142,76,255,.10);
+    }
+
+    .download-card:hover::before{
+      transform:scale(1.25);
+      opacity:.24;
+    }
+
+    .image-shell{
+      position:relative;
+      overflow:hidden;
+      border-radius:22px;
+      background:#0b0b16;
+      aspect-ratio:16/10;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .image-shell.square{
+      aspect-ratio:1/1;
+      max-height:520px;
+    }
+
+    .image-shell img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      transition:transform .55s ease, filter .4s ease;
+    }
+
+    .download-card:hover .image-shell img{
+      transform:scale(1.055);
+      filter:saturate(1.08) contrast(1.03);
+    }
+
+    .image-shine{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:linear-gradient(
+        115deg,
+        transparent 30%,
+        rgba(255,255,255,.16) 47%,
+        transparent 64%
+      );
+      transform:translateX(-140%);
+      transition:.8s ease;
+    }
+
+    .download-card:hover .image-shine{
+      transform:translateX(140%);
+    }
+
+    .corner-badge{
+      position:absolute;
+      top:12px;
+      left:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:.7rem;
+      font-weight:1000;
+      letter-spacing:.7px;
+      backdrop-filter:blur(12px);
+      background:rgba(8,8,18,.78);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 7px 20px rgba(0,0,0,.25);
+    }
+
+    .card-body{
+      position:relative;
+      z-index:2;
+      padding:20px 8px 9px;
+    }
+
+    .card-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:14px;
+    }
+
+    .card-body h3{
+      margin:0;
+      font-size:1.55rem;
+      letter-spacing:-.6px;
+    }
+
+    .type-pill{
+      flex:none;
+      padding:6px 9px;
+      border-radius:9px;
+      font-size:.67rem;
+      font-weight:1000;
+      letter-spacing:.6px;
+      color:#ddd6ee;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.09);
+    }
+
+    .card-body p{
+      margin:10px 0 18px;
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    .info-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:18px;
+    }
+
+    .mini-info{
+      padding:7px 9px;
+      border-radius:10px;
+      font-size:.75rem;
+      font-weight:800;
+      border:1px solid rgba(255,255,255,.075);
+      background:rgba(255,255,255,.035);
+      color:#d5d5e4;
+    }
+
+    .direct-button{
+      position:relative;
+      overflow:hidden;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      width:100%;
+      padding:14px 17px;
+      color:white;
+      text-decoration:none;
+      border-radius:14px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      transition:.22s ease;
+    }
+
+    .direct-button.purple{
+      background:linear-gradient(135deg,#7742ff,#c845ff,#ff4fa5);
+      box-shadow:0 12px 30px rgba(157,67,255,.20);
+    }
+
+    .direct-button.green{
+      color:#08120a;
+      background:linear-gradient(135deg,#59ef71,#a9ff6f,#d7ff80);
+      box-shadow:0 12px 30px rgba(115,255,109,.14);
+    }
+
+    .direct-button:hover{
+      transform:translateY(-3px);
+      filter:brightness(1.09);
+    }
+
+    .direct-button:active{
+      transform:translateY(0) scale(.97);
+    }
+
+    .direct-button::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:linear-gradient(
+        110deg,
+        transparent 38%,
+        rgba(255,255,255,.32) 50%,
+        transparent 62%
+      );
+      transform:translateX(-100%);
+      transition:.65s ease;
+    }
+
+    .direct-button:hover::after{
+      transform:translateX(100%);
+    }
+
+    /* ===== TARJETA VACÍA PARA FUTURO ===== */
+
+    .future-card{
+      min-height:180px;
+      border-radius:25px;
+      border:1px dashed rgba(255,255,255,.13);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      color:#77778f;
+      background:rgba(255,255,255,.018);
+      text-align:center;
+      padding:22px;
+    }
+
+    .future-card .plus{
+      font-size:2rem;
+      color:#85859b;
+    }
+
+    /* ===== FOOTER ===== */
+
+    footer{
+      margin-top:45px;
+      padding:35px 0 45px;
+      border-top:1px solid rgba(255,255,255,.07);
+      color:#74748c;
+      font-size:.85rem;
+    }
+
+    .footer-row{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    /* ===== RESPONSIVE ===== */
+
+    @media(max-width:850px){
+      .download-grid{
+        grid-template-columns:1fr;
+      }
+
+      .category-heading{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .category-description{
+        text-align:left;
+      }
+
+      .hero{
+        padding-top:60px;
+      }
+    }
+
+    @media(max-width:620px){
+      .nav{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .nav-links{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero h1{
+        letter-spacing:-3px;
+      }
+
+      .image-shell{
+        aspect-ratio:1/1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="aurora"></div>
+  <div class="background-grid"></div>
+  <div class="scanlines"></div>
+
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <div class="brand">
+          <span class="brand-cube"></span>
+          IMDGG DOWNLOADS
+        </div>
+
+        <div class="nav-links">
+          <a class="nav-link" href="#modpacks">Modpacks</a>
+          <a class="nav-link" href="#texture-packs">Texture Packs</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">✦ DESCARGAS • MINECRAFT • IMDGG</div>
+
+        <h1>
+          <span class="hero-gradient">DOWNLOADS</span>
+        </h1>
+
+        <p>
+          Todo lo que recomiendo o publico, reunido en un solo lugar.
+          Modpacks, texture packs y más cosas que voy a ir agregando con el tiempo.
+        </p>
+
+        <div class="hero-tags">
+          <span class="tag">⚡ FPS Boost</span>
+          <span class="tag">🎮 Minecraft</span>
+          <span class="tag">🧩 Modpacks</span>
+          <span class="tag">🖼 Texture Packs</span>
+          <span class="tag">✦ Más próximamente</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- MODPACKS -->
+    <section class="category" id="modpacks">
+      <div class="container">
+
+        <div class="category-heading">
+          <div>
+            <div class="category-kicker kicker-purple">01 • MODPACKS</div>
+            <h2>Modpacks</h2>
+          </div>
+
+          <p class="category-description">
+            Packs completos listos para instalar. Por ahora, mi proyecto principal de optimización.
+          </p>
+        </div>
+
+        <div class="download-grid">
+
+          <article class="download-card modpack">
+            <div class="image-shell">
+              <img src="modpack-imdgg.png" alt="DrainedGG Optimizer">
+              <span class="image-shine"></span>
+              <span class="corner-badge">⚡ DESTACADO</span>
+            </div>
+
+            <div class="card-body">
+
+              <div class="card-top">
+                <div>
+                  <h3>DrainedGG Optimizer</h3>
+                </div>
+
+                <span class="type-pill">MODPACK</span>
+              </div>
+
+              <p>
+                Mi modpack de optimización para sacar el mayor rendimiento posible de Minecraft,
+                reducir tirones y mejorar la experiencia en equipos de bajos recursos.
+              </p>
+
+              <div class="info-row">
+                <span class="mini-info">Minecraft</span>
+                <span class="mini-info">FPS Boost</span>
+                <span class="mini-info">Optimización</span>
+              </div>
+
+              <a
+                class="direct-button purple"
+                href="https://modrinth.com/modpack/drainedgg-optimizer"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Enlace directo ↗
+              </a>
+
+            </div>
+          </article>
+
+          <div class="future-card">
+            <div class="plus">＋</div>
+            <strong>Próximo modpack</strong>
+            <span>Este espacio queda preparado para lo que agreguemos después.</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- TEXTURE PACKS -->
+    <section class="category" id="texture-packs">
+      <div class="container">
+
+        <div class="category-heading">
+          <div>
+            <div class="category-kicker kicker-green">02 • TEXTURE PACK FPS BOOST</div>
+            <h2>Texture Pack FPS Boost</h2>
+          </div>
+
+          <p class="category-description">
+            Packs visuales pensados para mantener Minecraft ligero y con una estética más limpia.
+          </p>
+        </div>
+
+        <div class="download-grid">
+
+          <article class="download-card texture">
+
+            <div class="image-shell square">
+              <img src="f4te.webp" alt="F4TE Resource Pack">
+              <span class="image-shine"></span>
+              <span class="corner-badge">🌿 RESOURCE PACK</span>
+            </div>
+
+            <div class="card-body">
+
+              <div class="card-top">
+                <div>
+                  <h3>F4TE</h3>
+                </div>
+
+                <span class="type-pill">TEXTURE PACK</span>
+              </div>
+
+              <p>
+                Resource pack ligero para Minecraft con un estilo simple y limpio,
+                pensado como opción para quienes buscan una experiencia visual más liviana.
+              </p>
+
+              <div class="info-row">
+                <span class="mini-info">FPS Boost</span>
+                <span class="mini-info">Resource Pack</span>
+                <span class="mini-info">Minecraft</span>
+              </div>
+
+              <a
+                class="direct-button green"
+                href="https://modrinth.com/resourcepack/f4te/gallery"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Enlace directo ↗
+              </a>
+
+            </div>
+          </article>
+
+          <div class="future-card">
+            <div class="plus">＋</div>
+            <strong>Próximo texture pack</strong>
+            <span>Acá vamos a poder agregar más packs después.</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <span>© 2026 IMDGG Downloads</span>
+      <span>Minecraft • Modpacks • Texture Packs • More soon</span>
+    </div>
+  </footer>
+
+  <script>
+    // Píxeles decorativos flotando por el fondo.
+    const colors = [
+      "#8e4cff",
+      "#ff4fc8",
+      "#28e7ff",
+      "#83ff69",
+      "#ffe86b",
+      "#ff965c"
+    ];
+
+    for(let i = 0; i < 32; i++){
+      const pixel = document.createElement("span");
+      pixel.className = "pixel";
+
+      const size = Math.floor(Math.random() * 8) + 4;
+
+      pixel.style.width = size + "px";
+      pixel.style.height = size + "px";
+      pixel.style.left = Math.random() * 100 + "vw";
+      pixel.style.color = colors[Math.floor(Math.random() * colors.length)];
+      pixel.style.background = "currentColor";
+      pixel.style.animationDuration = (12 + Math.random() * 22) + "s";
+      pixel.style.animationDelay = (Math.random() * -25) + "s";
+      pixel.style.opacity = .12 + Math.random() * .32;
+
+      document.body.appendChild(pixel);
+    }
+  </script>
+
+</body>
+</html>
